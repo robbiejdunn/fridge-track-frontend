@@ -8,8 +8,9 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Edit <code>src/App.js</code> and save to reload. Test
         </p>
+        <input accept="image/*" id="icon-button-file" type="file" capture="environment"/>
         <a
           className="App-link"
           href="https://reactjs.org"
