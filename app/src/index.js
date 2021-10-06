@@ -7,25 +7,36 @@ import reportWebVitals from './reportWebVitals';
 import Camera from './components/Camera';
 import NewItemDialog from './components/NewItemDialog';
 import { ThemeProvider } from '@mui/material';
-import { createTheme } from '@material-ui/core';
+
+import AddItemSteps from './components/AddItemSteps';
+import SearchAppBar from './components/AppBar';
+
+import { createTheme } from '@mui/material/styles';
+import { green, purple } from '@mui/material/colors';
+import TemporaryDrawer from './components/TemporaryDrawer';
+import { Paper } from '@material-ui/core';
+import { BrowserRouter as Router } from "react-router-dom";
+import AppContent from './components/AppContent';
 
 const theme = createTheme({
   palette: {
-    type: 'dark',
     primary: {
-      main: '#097D1C'
+      main: '#77C8F5',
     },
     secondary: {
-      main: '#C94922'
-    }
-  }
+      main: '#A87431',
+    },
+  },
 });
+
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <Camera /> */}
     <ThemeProvider theme={theme}>
-      <NewItemDialog />
+      <Router>
+        <SearchAppBar />
+        <AppContent />
+      </Router>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
