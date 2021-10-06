@@ -16,6 +16,8 @@ import AddIcon from '@material-ui/icons/Add';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import CreateIcon from '@mui/icons-material/Create';
 import Camera from './Camera';
+import AddItemInputMethods from './AddItemInputMethods';
+import AddItemSteps from './AddItemSteps';
 
 const useStyles = makeStyles((theme) => ({
     inputMethodButton: {
@@ -30,6 +32,7 @@ export default function NewItemDialog(props) {
     
     const [open, setOpen] = React.useState(false);
     const [inputMethod, setInputMethod] = React.useState(null);
+    const [detectedItem, setDetectedItem] = React.useState();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -40,9 +43,11 @@ export default function NewItemDialog(props) {
         setInputMethod(null);
     };
 
-    const inputMethodClicked = (event) => {
-        console.log(event)
-        setInputMethod("scan");
+
+    const handleDetection = (detection) => {
+        alert("Detection");
+        setDetectedItem(detection);
+        setInputMethod("tmp");
     };
 
   return (
@@ -53,24 +58,9 @@ export default function NewItemDialog(props) {
             </IconButton>
         </Tooltip>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Add food item</DialogTitle>
+            <DialogTitle id="form-dialog-title">New product</DialogTitle>
             <DialogContent>
-                <DialogContentText>Add a new food item.</DialogContentText>
-                {inputMethod?
-                    ""
-                    :
-                    <div>
-                        <Button variant="outlined" onClick={inputMethodClicked} className={classes.inputMethodButton} startIcon={<CameraAltIcon />}>
-                            Scan
-                        </Button>
-                        <Button variant="outlined" className={classes.inputMethodButton} startIcon={<CreateIcon />}>
-                            Manual
-                        </Button>
-                    </div>
-                }
-                {inputMethod == 'scan' &&
-                    <Camera />
-                }
+                <AddItemSteps />
             </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

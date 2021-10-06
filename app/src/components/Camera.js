@@ -1,38 +1,32 @@
 // influenced by https://github.com/moigonzalez/pwa-barcode-scanner
 import React, { useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import Quagga from 'quagga';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-    video: {
-        width: '100px'
-    },
     videoContainer: {
-        width: '100px',
-    }
+        margin:'15px',
+        minWidth: '300px',
+        minHeight: '225px',
+    },
+    videoPlayer: {
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
+    },
+    videoPrompt: {
+        
+    },
 }));
 
 
 export default function Camera(props) {
     const classes = useStyles();
     const [videoError, setVideoError] = useState(false);
-    const [codeResultObject, setCodeResultObject] = useState(null);
-    let history = useHistory();
-
 
     const onInitSuccess = () => {
         Quagga.start();
-    }
-
-    const onDetected = (result) => {
-        Quagga.offDetected(onDetected);
-        const endpoint = `https://world.openfoodfacts.org/api/v0/product/${result.codeResult.code}.json`
-        axios.get(endpoint)
-        .then(res => {
-            setCodeResultObject(res.data)
-        });
     }
 
     useEffect(() => {
@@ -42,6 +36,11 @@ export default function Camera(props) {
                     name: "Live",
                     type: "LiveStream",
                     target: document.querySelector("#video"),
+                    constraints: {
+                        width: 600,
+                        height: 450,
+                        facingMode: "environment",
+                    }
                 },
                 numOfWorkers: 1,
                 locate: true,
@@ -56,7 +55,15 @@ export default function Camera(props) {
                 }
                 onInitSuccess();
             });
-            Quagga.onDetected(onDetected);
+            Quagga.onDetected((result) => {
+                Quagga.offDetected();
+                const endpoint = `https://world.openfoodfacts.org/api/v0/product/${result.codeResult.code}.json`
+                axios.get(endpoint)
+                .then(res => {
+                    props.onDetection(res.data);
+                    props.nextStep();
+                });
+            });
             return () => Quagga.stop();
 
         }
@@ -65,20 +72,21 @@ export default function Camera(props) {
 
     return (
         <div>
-            <div className="video__explanation">
-            <p>Scan a product&apos;s barcode and get its nutritional values <span role="img" aria-label="apple">🍎</span></p>
-            </div>
             <div className={classes.videoContainer}>
+            <div className={classes.videoPrompt}>Place the item's barcode in center of camera to scan</div>
             {videoError ?
-                <div className="skeleton__unsopported">
                 <div>
-                    <p>Your device does not support camera access or something went wrong <span role="img" aria-label="thinking-face">🤔</span></p>
-                    <p>You can enter the barcode below</p>
-                </div>
+                    <div>
+                        <p>Your device does not support camera access or something went wrong.</p>
+                    </div>
                 </div>
                 :
                 <div>
-                <div className={classes.video} id="video" />
+                    <div className={classes.videoPlayer} id="video"
+                        sx={{
+                            width: 200,
+                        }}
+                    />
                 </div>
             }
             </div>
