@@ -14,9 +14,10 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import AddIcon from '@mui/icons-material/Add';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import EditIcon from '@mui/icons-material/Edit';
 import HomeIcon from '@mui/icons-material/Home';
-import { makeStyles } from '@material-ui/core';
+import { Divider, makeStyles } from '@material-ui/core';
 import {
     BrowserRouter as Router,
     Switch,
@@ -99,7 +100,7 @@ export default function SearchAppBar() {
                 component={Link}
                 to='/scan'
             >
-                <ListItemIcon><AddIcon /></ListItemIcon>
+                <ListItemIcon><CameraAltIcon /></ListItemIcon>
                 <ListItemText primary='Scan' />
             </ListItem>
             <ListItem 
@@ -108,7 +109,7 @@ export default function SearchAppBar() {
                 component={Link}
                 to='/manual'
             >
-                <ListItemIcon><AddIcon /></ListItemIcon>
+                <ListItemIcon><EditIcon /></ListItemIcon>
                 <ListItemText primary='Manual entry' />
             </ListItem>
         </List>

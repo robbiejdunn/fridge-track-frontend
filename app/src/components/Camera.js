@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import Quagga from 'quagga';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme) => ({
     videoContainer: {
@@ -23,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Camera(props) {
     const classes = useStyles();
+    const history = useHistory();
     const [videoError, setVideoError] = useState(false);
 
     const onInitSuccess = () => {
@@ -60,8 +63,7 @@ export default function Camera(props) {
                 const endpoint = `https://world.openfoodfacts.org/api/v0/product/${result.codeResult.code}.json`
                 axios.get(endpoint)
                 .then(res => {
-                    props.onDetection(res.data);
-                    props.nextStep();
+                    history.push("/manual", { data: res.data })
                 });
             });
             return () => Quagga.stop();

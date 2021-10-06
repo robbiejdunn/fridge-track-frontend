@@ -6,8 +6,8 @@ import {
     Route,
   } from "react-router-dom";
 import Camera from './Camera';
+import FoodItemForm from './FoodItemForm';
 import HomePage from './HomePage';
-import NewItemSwitch from './NewItemSwitch';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +30,7 @@ export default function AppContent(props) {
                     <Camera />
                 </Route>
                 <Route exact path="/manual">
-                    <Camera />
+                    <FoodItemForm />
                 </Route>
             </Switch>
         </Paper>
