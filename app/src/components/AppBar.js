@@ -95,12 +95,21 @@ export default function SearchAppBar() {
             </ListItem>
             <ListItem 
                 button 
-                key='New product'
+                key='Scan'
                 component={Link}
-                to='/new'
+                to='/scan'
             >
                 <ListItemIcon><AddIcon /></ListItemIcon>
-                <ListItemText primary='Add product' />
+                <ListItemText primary='Scan' />
+            </ListItem>
+            <ListItem 
+                button 
+                key='Manual'
+                component={Link}
+                to='/manual'
+            >
+                <ListItemIcon><AddIcon /></ListItemIcon>
+                <ListItemText primary='Manual entry' />
             </ListItem>
         </List>
         </Box>

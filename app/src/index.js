@@ -1,20 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
-import Camera from './components/Camera';
-import NewItemDialog from './components/NewItemDialog';
 import { ThemeProvider } from '@mui/material';
-
-import AddItemSteps from './components/AddItemSteps';
 import SearchAppBar from './components/AppBar';
-
 import { createTheme } from '@mui/material/styles';
-import { green, purple } from '@mui/material/colors';
-import TemporaryDrawer from './components/TemporaryDrawer';
-import { Paper } from '@material-ui/core';
 import { BrowserRouter as Router } from "react-router-dom";
 import AppContent from './components/AppContent';
 
