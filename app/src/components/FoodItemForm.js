@@ -16,22 +16,22 @@ export default function FoodItemForm(props) {
     const [name, setName] = useState("");
 
     useEffect(() => {
+        console.log("test")
         if (history?.location?.state && history.location.state.status === 1) {
             setName(history.location.state.data.product.product_name);
         }
-    }, []);
+    }, [history]);
 
     return (
         <div>
-            {history.location.state?.data.product.selected_images.front.display.en ? 
+            {history?.location.state && history.location.state.status === 0 &&
+                <div id="product-not-found-message">Product not found, please enter manually</div>
+            }
+
+            {history?.location.state && history.location.state.status === 1 &&
                 <div className={classes.itemImageContainer}>
                     <img id="scanned-image" src={history.location.state?.data.product.selected_images.front.display.en} alt="Scanned item" />
                 </div>
-                :
-                <div>
-                    No code given {history.location.state?.data}
-                </div>
-
             }
             <TextField
                 label="Name"

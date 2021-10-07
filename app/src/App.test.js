@@ -14,12 +14,26 @@ test('renders learn react link', () => {
 
 test('form receives json product data correctly', () => {
     const history = createMemoryHistory();
-    history.push("/manual", { data: scanSampleJson })
+    history.push("/manual", { status: 1, data: scanSampleJson });
     const result = render(
       <Router history={history}>
         <FoodItemForm />
       </Router>
-    )
-    expect(result.container.querySelector("#scanned-image").getAttribute("src")).toBe("https://images.openfoodfacts.org/images/products/761/328/725/4429/front_en.3.400.jpg")
+    );
+    expect(result.container.querySelector("#product-not-found-message")).toBe(null);
+    expect(result.container.querySelector("#scanned-image").getAttribute("src")).toBe(
+      "https://images.openfoodfacts.org/images/products/761/328/725/4429/front_en.3.400.jpg"
+    );
     expect(result.container.querySelector("#product-name").getAttribute("value")).toBe("Milkybar");
+});
+
+test("form shows product not found message", () => {
+  const history = createMemoryHistory();
+  history.push("/manual", { status: 0 })
+  render(
+    <Router history={history}>
+      <FoodItemForm />
+    </Router>
+  );
+  expect(screen.getByText(/product not found/i)).toBeInTheDocument();
 })
