@@ -63,7 +63,7 @@ export default function Camera(props) {
                 const endpoint = `https://world.openfoodfacts.org/api/v0/product/${result.codeResult.code}.json`
                 axios.get(endpoint)
                 .then(res => {
-                    if (res.status === 1) {
+                    if (res.data.status === 1) {
                         history.push("/manual", { status: 1, data: res.data })
                     } else {
                         history.push("/manual", { status: 0 })
