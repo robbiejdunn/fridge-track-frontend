@@ -8,6 +8,9 @@ import SearchAppBar from './components/AppBar';
 import { createTheme } from '@mui/material/styles';
 import { BrowserRouter as Router } from "react-router-dom";
 import AppContent from './components/AppContent';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+
 
 const theme = createTheme({
   palette: {
@@ -23,12 +26,14 @@ const theme = createTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Router>
-        <SearchAppBar />
-        <AppContent />
-      </Router>
-    </ThemeProvider>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <SearchAppBar />
+          <AppContent />
+        </Router>
+      </ThemeProvider>
+    </LocalizationProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

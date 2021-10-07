@@ -1,6 +1,7 @@
 import { FilledInput, FormControl, InputLabel, makeStyles, TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import DatePicker from '@mui/lab/DatePicker';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,8 +45,13 @@ export default function FoodItemForm(props) {
                     onChange={(e) => {setName(e.target.value)}}
                 />
             </FormControl>
-            <FormControl variant="filled" fullWidth>
-                <InputLabel id="product-expiry-label" shrink>Expiry date</InputLabel>
+            <DatePicker
+                label="TAT"
+                value={expiryDate}
+                onChange={(e) => {setExpiryDate(e.target.value)}}
+                renderInput={(params) => <TextField {...params} />}
+                fullWidth
+            />
                 <FilledInput
                     labelId="product-expiry-label"
                     id="product-expiry"
@@ -53,7 +59,27 @@ export default function FoodItemForm(props) {
                     value={expiryDate}
                     onChange={(e) => {setExpiryDate(e.target.value)}}
                 />
+            <FormControl fullWidth>
+                <DatePicker
+                    label="Expiry date"
+                    value={expiryDate}
+                    onChange={(e) => {setExpiryDate(e)}}
+                    
+                    renderInput={(params) => <TextField {...params} />}
+                />
             </FormControl>
+
+
+            {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                    label="Basic example"
+                    value={value}
+                    onChange={(newValue) => {
+                    setValue(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                />
+            </LocalizationProvider> */}
 
         </div>
     );
