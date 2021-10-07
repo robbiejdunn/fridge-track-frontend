@@ -12,7 +12,7 @@ import HomePage from './HomePage';
 
 const useStyles = makeStyles((theme) => ({
     contentPaper: {
-        margin: '25px',
+        margin: '10px',
         overflow: 'hidden',
     }
 }));

@@ -1,12 +1,16 @@
-import { FilledInput, FormControl, InputLabel, makeStyles, TextField } from '@material-ui/core';
+import { Button, FilledInput, FormControl, InputLabel, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import DatePicker from '@mui/lab/DatePicker';
+import axios from 'axios';
 
 
 const useStyles = makeStyles((theme) => ({
     itemImageContainer: {
         textAlign: "center",
+        maxHeight: "150px",
+    },
+    formControl: {
+        marginBottom: "10px",
     },
 }));
 
@@ -24,6 +28,26 @@ export default function FoodItemForm(props) {
         }
     }, [history]);
 
+    const submitForm = () => {
+        let endpoint;
+        if(process.env['NODE_ENV'] && process.env['NODE_ENV'] === 'development') {
+            const apiId = process.env.REACT_APP_FRIDGE_TRACK_API_ENDPOINT.split('.')[0].replace('https://', '');
+            endpoint = `http://localhost:4566/restapis/${apiId}/prod/_user_request_/items`
+        } else {
+            endpoint = `${process.env.REACT_APP_FRIDGE_TRACK_API_ENDPOINT}items`
+        }
+        const data = {
+            name: name,
+            expiry: expiryDate,
+        };
+        axios.post(
+            endpoint,
+            data,
+        ).then(res => {
+            history.push("/");
+        })
+    };
+
     return (
         <div>
             {history?.location.state && history.location.state.status === 0 &&
@@ -32,10 +56,13 @@ export default function FoodItemForm(props) {
 
             {history?.location.state && history.location.state.status === 1 &&
                 <div className={classes.itemImageContainer}>
-                    <img id="scanned-image" src={history.location.state?.data.product.selected_images.front.display.en} alt="Scanned item" />
+                    <img id="scanned-image" 
+                        src={history.location.state?.data.product.selected_images.front.display.en} 
+                        alt="Scanned item" 
+                    />
                 </div>
             }
-            <FormControl variant="filled" fullWidth>
+            <FormControl className={classes.formControl} variant="filled" fullWidth>
                 <InputLabel id="product-name-label" shrink>Name</InputLabel>
                 <FilledInput
                     labelId="product-name-label"
@@ -45,42 +72,22 @@ export default function FoodItemForm(props) {
                     onChange={(e) => {setName(e.target.value)}}
                 />
             </FormControl>
-            <DatePicker
-                label="TAT"
-                value={expiryDate}
-                onChange={(e) => {setExpiryDate(e.target.value)}}
-                renderInput={(params) => <TextField {...params} />}
-                fullWidth
-            />
+            <FormControl className={classes.formControl} variant="filled" fullWidth>
+                <InputLabel id="product-expiry-label" shrink>Expiry date</InputLabel>
                 <FilledInput
                     labelId="product-expiry-label"
-                    id="product-expiry"
-                    type="datetime-local"
+                    id="product-name"
+                    type="date"
                     value={expiryDate}
                     onChange={(e) => {setExpiryDate(e.target.value)}}
                 />
-            <FormControl fullWidth>
-                <DatePicker
-                    label="Expiry date"
-                    value={expiryDate}
-                    onChange={(e) => {setExpiryDate(e)}}
-                    
-                    renderInput={(params) => <TextField {...params} />}
-                />
             </FormControl>
-
-
-            {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker
-                    label="Basic example"
-                    value={value}
-                    onChange={(newValue) => {
-                    setValue(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                />
-            </LocalizationProvider> */}
-
+            <Button 
+                variant="contained" 
+                fullWidth 
+                color="primary"
+                onClick={submitForm}
+            >Add</Button>
         </div>
     );
 }
