@@ -63,7 +63,12 @@ export default function Camera(props) {
                 const endpoint = `https://world.openfoodfacts.org/api/v0/product/${result.codeResult.code}.json`
                 axios.get(endpoint)
                 .then(res => {
-                    history.push("/manual", { data: res.data })
+                    if (res.status === 1) {
+                        history.push("/manual", { status: 1, data: res.data })
+                    } else {
+                        history.push("/manual", { status: 0 })
+                    }
+                    
                 });
             });
             return () => Quagga.stop();

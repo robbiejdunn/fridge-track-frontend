@@ -15,8 +15,8 @@ export default function FoodItemForm(props) {
     const history = useHistory();
     const [name, setName] = useState("");
 
-    useEffect((history) => {
-        if (history?.location?.state) {
+    useEffect(() => {
+        if (history?.location?.state && history.location.state.status === 1) {
             setName(history.location.state.data.product.product_name);
         }
     }, []);
@@ -25,7 +25,7 @@ export default function FoodItemForm(props) {
         <div>
             {history.location.state?.data.product.selected_images.front.display.en ? 
                 <div className={classes.itemImageContainer}>
-                    <img src={history.location.state?.data.product.selected_images.front.display.en} alt="Scanned item" />
+                    <img id="scanned-image" src={history.location.state?.data.product.selected_images.front.display.en} alt="Scanned item" />
                 </div>
                 :
                 <div>
