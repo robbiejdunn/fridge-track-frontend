@@ -8,10 +8,15 @@ const useStyles = makeStyles((theme) => ({
     itemImageContainer: {
         textAlign: "center",
         maxHeight: "150px",
+        marginBottom: "10px"
     },
     formControl: {
-        marginBottom: "10px",
+        marginBottom: "10px"
     },
+    itemImage: {
+        maxHeight: "150px",
+        overflow: "hidden"
+    }
 }));
 
 
@@ -32,9 +37,9 @@ export default function FoodItemForm(props) {
         let endpoint;
         if(process.env['NODE_ENV'] && process.env['NODE_ENV'] === 'development') {
             const apiId = process.env.REACT_APP_FRIDGE_TRACK_API_ENDPOINT.split('.')[0].replace('https://', '');
-            endpoint = `http://localhost:4566/restapis/${apiId}/prod/_user_request_/items`
+            endpoint = `http://localhost:4566/restapis/${apiId}/prod/_user_request_/products`
         } else {
-            endpoint = `${process.env.REACT_APP_FRIDGE_TRACK_API_ENDPOINT}items`
+            endpoint = `${process.env.REACT_APP_FRIDGE_TRACK_API_ENDPOINT}products`
         }
         const data = {
             name: name,
@@ -57,6 +62,7 @@ export default function FoodItemForm(props) {
             {history?.location.state && history.location.state.status === 1 &&
                 <div className={classes.itemImageContainer}>
                     <img id="scanned-image" 
+                        className={classes.itemImage}
                         src={history.location.state?.data.product.selected_images.front.display.en} 
                         alt="Scanned item" 
                     />

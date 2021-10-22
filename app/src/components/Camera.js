@@ -11,15 +11,13 @@ const useStyles = makeStyles((theme) => ({
         margin:'15px',
         minWidth: '300px',
         minHeight: '225px',
+        maxHeight: '300px',
     },
     videoPlayer: {
         width: '100%',
         height: '100%',
-        overflow: 'hidden',
-    },
-    videoPrompt: {
-        
-    },
+        overflow: 'hidden'
+    }
 }));
 
 
@@ -75,12 +73,11 @@ export default function Camera(props) {
 
         }
         return undefined;
-    }, []);
+    }, [history]);
 
     return (
         <div>
             <div className={classes.videoContainer}>
-            <div className={classes.videoPrompt}>Place the item's barcode in center of camera to scan</div>
             {videoError ?
                 <div>
                     <div>
