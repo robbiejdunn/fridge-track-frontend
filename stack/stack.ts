@@ -4,7 +4,7 @@ import { App, Stack, StackProps } from '@aws-cdk/core';
 import { Distribution } from '@aws-cdk/aws-cloudfront';
 import { S3Origin } from '@aws-cdk/aws-cloudfront-origins';
 
-export class FridgeTrackStack extends Stack {
+export class FridgeTrackFrontendStack extends Stack {
     constructor(scope: App, id: string, props?: StackProps) {
         super(scope, id, props);
 
