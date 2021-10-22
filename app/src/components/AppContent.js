@@ -4,17 +4,15 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
   } from "react-router-dom";
-import HomePage from './HomePage';
-import ReactDOM from "react-dom";
-import NewProductPage from './NewProductPage'
 import Camera from './Camera';
+import FoodItemForm from './FoodItemForm';
+import HomePage from './HomePage';
 
 
 const useStyles = makeStyles((theme) => ({
     contentPaper: {
-        margin: '5px',
+        margin: '10px',
         overflow: 'hidden',
     }
 }));
@@ -23,18 +21,16 @@ const useStyles = makeStyles((theme) => ({
 export default function AppContent(props) {
     const classes = useStyles();
 
-    // const RouteSwitch = ReactDOM.render(
-    //     <div>
-
-    //     </div>
-    // )
-
     return (
         <Paper elevation={0} className={classes.contentPaper}>
             <Switch>
                 <Route exact path="/" component={HomePage}>
                 </Route>
-                <Route exact path="/new" component={Camera}>
+                <Route exact path="/scan">
+                    <Camera />
+                </Route>
+                <Route exact path="/manual">
+                    <FoodItemForm />
                 </Route>
             </Switch>
         </Paper>
