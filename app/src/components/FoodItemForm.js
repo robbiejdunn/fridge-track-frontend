@@ -27,7 +27,6 @@ export default function FoodItemForm(props) {
     const [expiryDate, setExpiryDate] = useState("");
 
     useEffect(() => {
-        console.log("test")
         if (history?.location?.state && history.location.state.status === 1) {
             setName(history.location.state.data.product.product_name);
         }
